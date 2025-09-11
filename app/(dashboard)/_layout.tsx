@@ -1,26 +1,26 @@
-import { View, Text, SafeAreaView, ActivityIndicator } from "react-native"
-import React, { useEffect } from "react"
-import { Slot, Tabs, useRouter } from "expo-router"
-import { MaterialIcons } from "@expo/vector-icons"
-import { useAuth } from "@/context/AuthContext"
+import { useAuth } from "@/context/AuthContext";
+import { MaterialIcons } from "@expo/vector-icons";
+import { Tabs, useRouter } from "expo-router";
+import React, { useEffect } from "react";
+import { ActivityIndicator, SafeAreaView, View } from "react-native";
 
 const DashboardLayout = () => {
-  const { user, loading } = useAuth()
-  const router = useRouter()
-  console.log("User Data :", user)
+  const { user, loading } = useAuth();
+  const router = useRouter();
+  console.log("User Data :", user);
 
   useEffect(() => {
     if (!loading && !user) {
-      router.push("/login")
+      router.push("/login");
     }
-  }, [user, loading])
+  }, [user, loading]);
 
   if (loading) {
     return (
       <View className="flex-1 w-full justify-center align-items-center">
         <ActivityIndicator size="large" />
       </View>
-    )
+    );
   }
 
   return (
@@ -31,21 +31,21 @@ const DashboardLayout = () => {
           tabBarActiveTintColor: "#2ecc71",
           tabBarInactiveTintColor: "#2c3e50",
           tabBarStyle: {
-            backgroundColor: "#bdc3c7"
-          }
+            backgroundColor: "#bdc3c7",
+          },
         }}
       >
         <Tabs.Screen
-          name="home"
+          name="transaction"
           options={{
-            title: "Home",
+            title: "transaction",
             tabBarIcon: (data) => (
               <MaterialIcons
                 name="home-filled"
                 size={data.size}
                 color={data.color}
               />
-            )
+            ),
           }}
         />
         <Tabs.Screen
@@ -59,7 +59,7 @@ const DashboardLayout = () => {
                 size={data.size}
                 color={data.color}
               />
-            )
+            ),
           }}
         />
         <Tabs.Screen
@@ -72,25 +72,25 @@ const DashboardLayout = () => {
                 size={data.size}
                 color={data.color}
               />
-            )
+            ),
           }}
         />
         <Tabs.Screen
-          name="setting"
+          name="notes"
           options={{
-            title: "Setting",
+            title: "notes",
             tabBarIcon: (data) => (
               <MaterialIcons
                 name="settings"
                 size={data.size}
                 color={data.color}
               />
-            )
+            ),
           }}
         />
       </Tabs>
     </SafeAreaView>
-  )
-}
+  );
+};
 
-export default DashboardLayout
+export default DashboardLayout;

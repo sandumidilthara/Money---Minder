@@ -1,11 +1,14 @@
+import { Timestamp } from "firebase/firestore";
+
 export interface Transaction {
   id?: string;
   Account: string;
   Amount: number;
   Category: string;
-  Date: Date | string;
+  Date: Date | string | Timestamp;
   Note: string;
-  type: "income" | "expense";
+
+  type: "income" | "expences";
 }
 
 export interface TransactionSummary {

@@ -42,8 +42,8 @@ export const getAllExpenses = async (): Promise<Transaction[]> => {
     const expensesList = snapshot.docs.map((doc) => ({
       id: doc.id,
       ...doc.data(),
-      type: "expense" as const,
-    })) as Transaction[];
+      type: "expences" as const,
+    })) as unknown as Transaction[];
     return expensesList;
   } catch (error) {
     console.error("Error fetching expenses:", error);
@@ -98,7 +98,7 @@ export const getTransactionSummary = async (): Promise<TransactionSummary> => {
     transactions.forEach((transaction) => {
       if (transaction.type === "income") {
         totalIncome += Number(transaction.Amount);
-      } else if (transaction.type === "expense") {
+      } else if (transaction.type === "expences") {
         totalExpense += Number(transaction.Amount);
       }
     });
@@ -190,7 +190,7 @@ export const deleteIncome = async (id: string) => {
 // Delete expense transaction
 export const deleteExpense = async (id: string) => {
   try {
-    const docRef = doc(db, "expenses", id);
+    const docRef = doc(db, "expences", id);
     return await deleteDoc(docRef);
   } catch (error) {
     console.error("Error deleting expense:", error);
@@ -219,14 +219,14 @@ export const getExpenseById = async (
   id: string
 ): Promise<Transaction | null> => {
   try {
-    const docRef = doc(db, "expenses", id);
+    const docRef = doc(db, "expences", id);
     const snapshot = await getDoc(docRef);
     return snapshot.exists()
       ? ({
           id: snapshot.id,
           ...snapshot.data(),
-          type: "expense",
-        } as Transaction)
+          type: "expences",
+        } as unknown as Transaction)
       : null;
   } catch (error) {
     console.error("Error getting expense by ID:", error);
@@ -254,7 +254,7 @@ export const getTransactionsByCategory = async (
       id: doc.id,
       ...doc.data(),
       type: "expense" as const,
-    })) as Transaction[];
+    })) as unknown as Transaction[];
 
     return [...incomeList, ...expensesList];
   } catch (error) {
@@ -282,8 +282,8 @@ export const getTransactionsByAccount = async (
     const expensesList = expenseQuery.docs.map((doc) => ({
       id: doc.id,
       ...doc.data(),
-      type: "expense" as const,
-    })) as Transaction[];
+      type: "expences" as const,
+    })) as unknown as Transaction[];
 
     return [...incomeList, ...expensesList];
   } catch (error) {
