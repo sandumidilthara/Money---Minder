@@ -1,10 +1,17 @@
 import { useAuth } from "@/context/AuthContext";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Tabs, useRouter } from "expo-router";
-import React, { useEffect } from "react";
-import { ActivityIndicator, SafeAreaView, View } from "react-native";
+import React, { useEffect, useState } from "react";
+import {
+  ActivityIndicator,
+  SafeAreaView,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 
 const DashboardLayout = () => {
+  const [currentDate, setCurrentDate] = useState(new Date());
   const { user, loading } = useAuth();
   const router = useRouter();
   console.log("User Data :", user);
@@ -14,6 +21,31 @@ const DashboardLayout = () => {
       router.push("/login");
     }
   }, [user, loading]);
+
+  const goToPreviousMonth = () => {
+    setCurrentDate((prevDate) => {
+      const newDate = new Date(prevDate);
+      newDate.setMonth(newDate.getMonth() - 1);
+      return newDate;
+    });
+  };
+
+  const goToNextMonth = () => {
+    setCurrentDate((prevDate) => {
+      const newDate = new Date(prevDate);
+      newDate.setMonth(newDate.getMonth() + 1);
+      return newDate;
+    });
+  };
+
+  // Format month display
+  const formatMonthYear = (date: any) => {
+    const options = {
+      year: "numeric",
+      month: "short",
+    };
+    return date.toLocaleDateString("en-US", options);
+  };
 
   if (loading) {
     return (
@@ -25,6 +57,27 @@ const DashboardLayout = () => {
 
   return (
     <SafeAreaView className="flex-1 bg-white">
+      {/* Month Navigation Header */}
+      <View className="flex-row items-center px-5 py-4 bg-gray-50 border-b border-gray-200">
+        <TouchableOpacity
+          onPress={goToPreviousMonth}
+          className="p-2 bg-white rounded-full shadow-sm"
+        >
+          <MaterialIcons name="chevron-left" size={24} color="#2c3e50" />
+        </TouchableOpacity>
+
+        <Text className="text-lg font-bold text-gray-800 ml-3">
+          {formatMonthYear(currentDate)}
+        </Text>
+
+        <TouchableOpacity
+          onPress={goToNextMonth}
+          className="p-2 bg-white rounded-full shadow-sm ml-3"
+        >
+          <MaterialIcons name="chevron-right" size={24} color="#2c3e50" />
+        </TouchableOpacity>
+      </View>
+
       <Tabs
         screenOptions={{
           headerShown: false,
