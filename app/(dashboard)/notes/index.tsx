@@ -210,6 +210,7 @@ const NotesHomeScreen = () => {
       });
 
       const notesData = await getNotesByMonth(year, month);
+
       setNotes(notesData);
     } catch (error) {
       console.error("Error loading notes:", error);
