@@ -292,13 +292,13 @@ const ExpensePieChart: React.FC = () => {
 
   // Color palette for different categories
   const colors = [
-    "#FF6384", // Red
-    "#36A2EB", // Blue
-    "#FFCE56", // Yellow
-    "#4BC0C0", // Teal
+    "#F39F9F", // Red
+    "#A3CCDA", // Blue
+    "#F8F7BA", // Yellow
+    "#A0C878", // Teal
     "#9966FF", // Purple
     "#FF9F40", // Orange
-    "#FF6384", // Pink
+    "#A35C7A", // Pink
     "#C9CBCF", // Gray
     "#4BC0C0", // Cyan
     "#FF6384", // Coral
@@ -308,7 +308,7 @@ const ExpensePieChart: React.FC = () => {
   const formatCurrency = (amount: number): string => {
     return new Intl.NumberFormat("en-US", {
       style: "currency",
-      currency: "USD",
+      currency: "LKR",
     }).format(amount);
   };
 
@@ -466,7 +466,7 @@ const ExpensePieChart: React.FC = () => {
     >
       {/* Header */}
       <View className="p-4 bg-white border-b border-gray-200">
-        <Text className="text-xl font-bold text-gray-800 mb-1">
+        <Text className="text-xl font-bold text-green-300 mb-1">
           Expense Breakdown
         </Text>
         <Text className="text-sm text-gray-600">

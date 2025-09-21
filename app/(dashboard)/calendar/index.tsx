@@ -421,7 +421,7 @@ const TransactionCalendar: React.FC = () => {
     <ScrollView className="flex-1 bg-gray-100">
       {/* Header */}
       <View className="p-4 bg-white border-b border-gray-200">
-        <Text className="text-xl font-bold text-gray-800 mb-1">
+        <Text className="text-xl font-bold text-green-300 mb-1">
           Transaction Calendar
         </Text>
         <Text className="text-sm text-gray-600">

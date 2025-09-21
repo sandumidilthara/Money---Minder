@@ -396,7 +396,7 @@ const Home = () => {
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat("en-US", {
       style: "currency",
-      currency: "USD",
+      currency: "LKR",
     }).format(amount);
   };
 
@@ -488,9 +488,7 @@ const Home = () => {
             </View>
           </View>
           {item.Note && (
-            <Text className="text-xs text-gray-600 italic ml-8">
-              {item.Note}
-            </Text>
+            <Text className="text-xs text-gray-600 italic ">{item.Note}</Text>
           )}
         </View>
 
@@ -512,7 +510,7 @@ const Home = () => {
     colorClass: string,
     icon: string
   ) => (
-    <View className="flex-1 items-center bg-gray-800 py-4 px-2 mx-1 rounded-lg min-h-[90px] justify-center">
+    <View className="flex-1 items-center bg-green-200 py-4 px-2 mx-1 rounded-lg min-h-[30px] justify-center">
       <Text className="text-xl mb-2">{icon}</Text>
       <Text className="text-xs font-medium text-gray-400 mb-1.5 text-center">
         {title}
@@ -537,7 +535,7 @@ const Home = () => {
   return (
     <View className="flex-1 bg-gray-100">
       {/* Summary Cards */}
-      <View className="flex-row px-4 py-5 bg-gray-900 justify-between">
+      <View className="flex-row px-4 py-5 bg-white justify-between w-30">
         {renderCompactSummaryCard(
           "Income",
           summary.totalIncome,
@@ -553,15 +551,12 @@ const Home = () => {
         {renderCompactSummaryCard(
           "Balance",
           summary.balance,
-          summary.balance >= 0 ? "text-green-500" : "text-red-500",
+          summary.balance >= 0 ? "text-blue-500" : "text-red-500",
           "💳"
         )}
       </View>
 
       <View className="p-4 bg-white border-b border-gray-200">
-        <Text className="text-lg font-semibold text-gray-800 mb-1">
-          Recent Notes - {formatMonthYear(currentDate)}
-        </Text>
         <View className="space-y-1 mt-2">
           {notes.slice(0, 3).map((note, index) => (
             <View key={note.id || index} className="flex-row items-start">
@@ -604,7 +599,7 @@ const Home = () => {
       {/* Floating Add button */}
       <View className="absolute bottom-5 right-5 z-40">
         <Pressable
-          className="bg-blue-500 rounded-full p-5 shadow-lg"
+          className="bg-green-300 rounded-full p-5 shadow-lg"
           onPress={() => {
             router.push("/(dashboard)/transaction/new");
           }}

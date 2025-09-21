@@ -227,28 +227,29 @@ const DashboardLayout = () => {
 
   return (
     <MonthContext.Provider value={{ currentDate, setCurrentDate }}>
-      <SafeAreaView className="flex-1 bg-white ">
-        {/* Month Navigation Header */}
-        <View className="flex-row items-center  m-10 px-5 py-4 bg-gray-50 border-b border-gray-200">
+      <SafeAreaView className="flex-1 bg-white">
+        {/* Month Navigation Header - Compact Design */}
+        <View className="flex-row items-center  px-6 pt-2 pb-4 bg-white border-b border-gray-200 shadow-sm mt-6">
           <TouchableOpacity
             onPress={goToPreviousMonth}
-            className="p-2 bg-white rounded-full shadow-sm"
+            className="p-2 bg-gray-50  shadow-sm border border-gray-100"
           >
-            <MaterialIcons name="chevron-left" size={24} color="#2c3e50" />
+            <MaterialIcons name="chevron-left" size={22} color="#2c3e50" />
           </TouchableOpacity>
 
-          <Text className="text-lg font-bold text-gray-800 ml-3">
-            {formatMonthYear(currentDate)}
-          </Text>
+          <View className="mx-6">
+            <Text className="text-lg font-bold text-gray-800 text-center">
+              {formatMonthYear(currentDate)}
+            </Text>
+          </View>
 
           <TouchableOpacity
             onPress={goToNextMonth}
-            className="p-2 bg-white rounded-full shadow-sm ml-3"
+            className="p-2 bg-gray-50  shadow-sm border border-gray-100"
           >
-            <MaterialIcons name="chevron-right" size={24} color="#2c3e50" />
+            <MaterialIcons name="chevron-right" size={22} color="#2c3e50" />
           </TouchableOpacity>
         </View>
-
         <Tabs
           screenOptions={{
             headerShown: false,
@@ -278,7 +279,7 @@ const DashboardLayout = () => {
               title: "Calendar",
               tabBarIcon: (data) => (
                 <MaterialIcons
-                  name="check-circle"
+                  name="calendar-month"
                   size={data.size}
                   color={data.color}
                 />
@@ -291,7 +292,7 @@ const DashboardLayout = () => {
               title: "Stats",
               tabBarIcon: (data) => (
                 <MaterialIcons
-                  name="person"
+                  name="bar-chart"
                   size={data.size}
                   color={data.color}
                 />
@@ -304,7 +305,7 @@ const DashboardLayout = () => {
               title: "Notes",
               tabBarIcon: (data) => (
                 <MaterialIcons
-                  name="settings"
+                  name="sticky-note-2"
                   size={data.size}
                   color={data.color}
                 />

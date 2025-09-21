@@ -331,11 +331,8 @@ const NotesHomeScreen = () => {
     <View className="flex-1 bg-gray-100">
       {/* Header */}
       <View className="p-4 bg-white border-b border-gray-200">
-        <Text className="text-lg font-semibold text-gray-800 mb-1">
+        <Text className="text-lg font-semibold text-green-300 mb-1">
           Notes for {formatMonthYear(currentDate)}
-        </Text>
-        <Text className="text-sm text-gray-600">
-          {notes.length} notes found
         </Text>
       </View>
 
@@ -365,7 +362,7 @@ const NotesHomeScreen = () => {
       {/* Floating Add Button */}
       <View className="absolute bottom-5 right-5 z-40">
         <Pressable
-          className="bg-blue-500 rounded-full p-5 shadow-lg"
+          className="bg-green-300 rounded-full p-5 shadow-lg"
           onPress={() => {
             router.push("/(dashboard)/notes/new");
           }}

@@ -325,8 +325,8 @@ const TransactionFormScreen = () => {
         setNewCategoryName("");
       }}
     >
-      <View className="flex-1 bg-black bg-opacity-50 justify-center items-center">
-        <View className="bg-gray-800 rounded-lg p-6 mx-8 w-80">
+      <View className="flex-1 bg-green-50 bg-opacity-50 justify-center items-center">
+        <View className="bg-gray-400 rounded-lg p-6 mx-8 w-80">
           <Text className="text-white text-xl font-bold mb-4 text-center">
             Add New Category
           </Text>
@@ -374,10 +374,12 @@ const TransactionFormScreen = () => {
       onRequestClose={() => setShowCategoryModal(false)}
       hardwareAccelerated={false}
     >
-      <View className="flex-1 bg-gray-900 pt-6 android:pt-0">
+      <View className="flex-1 bg-green-50 pt-6 android:pt-0">
         {/* Header */}
         <View className="flex-row justify-between items-center px-5 py-4 border-b border-gray-600">
-          <Text className="text-white text-xl font-bold">Select Category</Text>
+          <Text className="text-green-600 text-xl font-bold">
+            Select Category
+          </Text>
           <TouchableOpacity
             onPress={() => setShowCategoryModal(false)}
             className="w-9 h-9 rounded-full bg-gray-600 justify-center items-center"
@@ -430,7 +432,7 @@ const TransactionFormScreen = () => {
             {getCurrentCategories().map((cat, index) => (
               <TouchableOpacity
                 key={cat.id}
-                className="bg-gray-600 py-5 px-2.5 rounded-lg mb-4 items-center justify-center min-h-[85px]"
+                className="bg-green-200 py-5 px-2.5 rounded-lg mb-4 items-center justify-center min-h-[85px]"
                 style={{
                   width: (width - 45) / 3,
                 }}
@@ -440,7 +442,7 @@ const TransactionFormScreen = () => {
                   setShowCategoryModal(false);
                 }}
               >
-                <Text className="text-white text-sm text-center font-medium leading-tight">
+                <Text className="text-green-600 text-sm text-center font-medium leading-tight">
                   {cat.name}
                 </Text>
               </TouchableOpacity>
@@ -452,18 +454,18 @@ const TransactionFormScreen = () => {
   );
 
   return (
-    <SafeAreaView className="flex-1 bg-gray-900">
+    <SafeAreaView className="flex-1 bg-green-50">
       <View className="flex-1">
         {/* Header */}
         <View className="flex-row justify-between items-center p-4 border-b border-gray-700">
           <TouchableOpacity onPress={() => router.back()}>
-            <Text className="text-white text-2xl">←</Text>
+            <Text className="text-green-600 text-2xl">←</Text>
           </TouchableOpacity>
-          <Text className="text-white text-xl font-bold capitalize">
+          <Text className="text-green-600 text-xl font-bold capitalize">
             {isNew ? transactionType : `Edit ${transactionType}`}
           </Text>
           <TouchableOpacity onPress={() => router.back()}>
-            <Text className="text-white text-2xl">×</Text>
+            <Text className="text-green-600 text-2xl">×</Text>
           </TouchableOpacity>
         </View>
 
@@ -474,7 +476,7 @@ const TransactionFormScreen = () => {
               className={`flex-1 py-3 px-4 rounded-lg border-2 ${
                 transactionType === "income"
                   ? "bg-green-600 border-green-500"
-                  : "bg-gray-800 border-gray-600"
+                  : "bg-gray-200 border-gray-300"
               }`}
               onPress={() => {
                 setTransactionType("income");
@@ -488,7 +490,7 @@ const TransactionFormScreen = () => {
               className={`flex-1 py-3 px-4 rounded-lg border-2 ${
                 transactionType === "expences"
                   ? "bg-red-600 border-red-500"
-                  : "bg-gray-800 border-gray-600"
+                  : "bg-gray-200 border-gray-300"
               }`}
               onPress={() => {
                 setTransactionType("expences");
@@ -507,14 +509,14 @@ const TransactionFormScreen = () => {
             <Text className="text-gray-400 text-sm mb-2">Date</Text>
             <View className="flex-row space-x-4">
               <TextInput
-                className="text-white text-lg bg-transparent flex-1"
+                className="text-green-600 text-lg bg-transparent flex-1"
                 value={date}
                 onChangeText={setDate}
                 placeholder="MM/DD/YYYY"
                 placeholderTextColor="#9CA3AF"
               />
               <TextInput
-                className="text-white text-lg bg-transparent flex-1"
+                className="text-green-600 text-lg bg-transparent flex-1"
                 value={time}
                 onChangeText={setTime}
                 placeholder="HH:MM"
@@ -528,7 +530,7 @@ const TransactionFormScreen = () => {
           <View className="px-4 py-4">
             <Text className="text-gray-400 text-sm mb-2">Amount</Text>
             <TextInput
-              className="text-white text-2xl bg-transparent"
+              className="text-green-600 text-2xl bg-transparent"
               value={amount}
               onChangeText={setAmount}
               placeholder="$ 0.00"
@@ -545,7 +547,7 @@ const TransactionFormScreen = () => {
           >
             <Text className="text-gray-400 text-sm mb-2">Category</Text>
             <View className="flex-row items-center">
-              <Text className="text-white text-lg">
+              <Text className="text-green-600 text-lg">
                 {category || "Select category"}
               </Text>
             </View>
@@ -577,7 +579,7 @@ const TransactionFormScreen = () => {
           <View className="px-4 py-4">
             <Text className="text-gray-400 text-sm mb-2">Note</Text>
             <TextInput
-              className="text-white text-lg bg-transparent"
+              className="text-green-600 text-lg bg-transparent"
               value={note}
               onChangeText={setNote}
               placeholder="Add note..."

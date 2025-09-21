@@ -81,18 +81,18 @@ const NoteFormScreen = () => {
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-gray-900">
+    <SafeAreaView className="flex-1 bg-white">
       <View className="flex-1">
         {/* Header */}
         <View className="flex-row justify-between items-center p-4 border-b border-gray-700">
           <TouchableOpacity onPress={() => router.back()}>
-            <Text className="text-white text-2xl">←</Text>
+            <Text className="text-green-400 text-2xl">←</Text>
           </TouchableOpacity>
-          <Text className="text-white text-xl font-bold capitalize">
+          <Text className="text-green-400 text-xl font-bold capitalize">
             {isNew ? "New Note" : "Edit Note"}
           </Text>
           <TouchableOpacity onPress={() => router.back()}>
-            <Text className="text-white text-2xl">×</Text>
+            <Text className="text-green-400 text-2xl">×</Text>
           </TouchableOpacity>
         </View>
 
@@ -101,7 +101,7 @@ const NoteFormScreen = () => {
           <View className="px-4 py-4">
             <Text className="text-gray-400 text-sm mb-2">Message</Text>
             <TextInput
-              className="text-white text-lg bg-transparent"
+              className="text-green-400 text-lg bg-transparent"
               value={message}
               onChangeText={setMessage}
               placeholder="Write your note here..."
@@ -123,7 +123,7 @@ const NoteFormScreen = () => {
           {/* Save Button */}
           <View className="p-4 mt-8">
             <TouchableOpacity
-              className="bg-blue-600 py-4 rounded-lg"
+              className="bg-green-300 py-4 rounded-lg"
               onPress={handleSubmit}
             >
               <Text className="text-white text-center text-lg font-bold">
