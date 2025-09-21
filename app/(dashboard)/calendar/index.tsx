@@ -1,128 +1,3 @@
-// import {
-//   View,
-//   Text,
-//   Pressable,
-//   ScrollView,
-//   TouchableOpacity,
-//   Alert
-// } from "react-native"
-// import React, { useEffect, useState } from "react"
-// import { getAllTask, getAllTaskData, taskColRef } from "@/services/taskService"
-// import { MaterialIcons } from "@expo/vector-icons"
-// import { useRouter, useSegments } from "expo-router"
-// import { Task } from "@/types/task"
-// import { useLoader } from "@/context/LoaderContext"
-// import { onSnapshot } from "firebase/firestore"
-
-// const TasksScreen = () => {
-//   const [tasks, setTasks] = useState<Task[]>([])
-//   const segment = useSegments()
-//   const router = useRouter()
-//   const { hideLoader, showLoader } = useLoader()
-
-//   const handleFetchData = async () => {
-//     showLoader()
-//     await getAllTaskData()
-//       .then((data) => {
-//         setTasks(data)
-//         console.log(data)
-//       })
-//       .catch((err) => {
-//         console.error(err)
-//       })
-//       .finally(() => {
-//         hideLoader()
-//       })
-//     //  await getAllTask()
-//     // .then((data) => {
-//     //   console.log(data)
-//     // })
-//     // .catch((err) => {
-//     //   console.error(err)
-//     // })
-//   }
-
-//   // useEffect(() => {
-//   //   handleFetchData()
-//   // }, [segment])
-
-//   useEffect(() => {
-//     const unsubcribe = onSnapshot(
-//       taskColRef,
-//       (snapshot) => {
-//         const taskList = snapshot.docs.map((taskRef) => ({
-//           id: taskRef.id,
-//           ...taskRef.data()
-//         })) as Task[]
-//         setTasks(taskList)
-//       },
-//       (err) => {
-//         console.error(err)
-//       }
-//     )
-//     return () => unsubcribe()
-//   }, [])
-
-//   const hadnleDelete = () => {
-//     Alert.alert("Alert Title", "Alert Desc", [
-//       { text: "Cancel" },
-//       {
-//         text: "Delete",
-//         onPress: async () => {
-//           // user is confirmed
-//           // so delete task
-//           //
-//         }
-//       }
-//     ])
-//   }
-
-//   return (
-//     <View className="flex-1 w-full justify-center align-items-center">
-//       <Text className="text-center text-4xl">Tasks screen</Text>
-//       <View className="absolute bottom-5 right-5 z-40">
-//         <Pressable
-//           className="bg-blue-500 rounded-full p-5 shadow-lg"
-//           onPress={() => {
-//             router.push("/(dashboard)/tasks/new")
-//           }}
-//         >
-//           <MaterialIcons name="add" size={28} color={"#fff"} />
-//         </Pressable>
-//       </View>
-
-//       <ScrollView className="mt-4">
-//         {tasks.map((task) => {
-//           return (
-//             <View
-//               key={task.id}
-//               className="bg-gray-200 p-4 mb-3 rounded-lg mx-4 border border-gray-400"
-//             >
-//               <Text className="text-lg font-semibold">{task.title}</Text>
-//               <Text className="text-sm text-gray-700 mb-2">
-//                 {task.description}
-//               </Text>
-//               <View className="flex-row">
-//                 <TouchableOpacity
-//                   className="bg-yellow-300 px-3 py-1 rounded"
-//                   onPress={() => router.push(`/(dashboard)/tasks/${task.id}`)}
-//                 >
-//                   <Text className="text-xl">Edit</Text>
-//                 </TouchableOpacity>
-//                 <TouchableOpacity className="bg-red-500 px-3 py-1 rounded ml-3">
-//                   <Text className="text-xl">Delete</Text>
-//                 </TouchableOpacity>
-//               </View>
-//             </View>
-//           )
-//         })}
-//       </ScrollView>
-//     </View>
-//   )
-// }
-
-// export default TasksScreen
-
 import { useMonthContext } from "@/app/(dashboard)/_layout";
 import { getTransactionsByMonth } from "@/services/transactionService";
 import { Transaction } from "@/types/transaction";
@@ -152,10 +27,8 @@ const TransactionCalendar: React.FC = () => {
   const [calendarData, setCalendarData] = useState<DayData[]>([]);
   const [selectedDay, setSelectedDay] = useState<DayData | null>(null);
 
-  // Get current selected month from dashboard
   const { currentDate } = useMonthContext();
 
-  // Format currency
   const formatCurrency = (amount: number): string => {
     return new Intl.NumberFormat("en-US", {
       style: "currency",
@@ -165,7 +38,6 @@ const TransactionCalendar: React.FC = () => {
     }).format(amount);
   };
 
-  // Format month year for display
   const formatMonthYear = (date: Date) => {
     const options: Intl.DateTimeFormatOptions = {
       year: "numeric",
@@ -174,24 +46,20 @@ const TransactionCalendar: React.FC = () => {
     return date.toLocaleDateString("en-US", options);
   };
 
-  // Generate calendar data
   const generateCalendarData = (transactions: Transaction[]): DayData[] => {
     const year = currentDate.getFullYear();
     const month = currentDate.getMonth();
 
-    // Get first day of month and number of days
     const firstDayOfMonth = new Date(year, month, 1);
     const lastDayOfMonth = new Date(year, month + 1, 0);
     const daysInMonth = lastDayOfMonth.getDate();
-    const startDayOfWeek = firstDayOfMonth.getDay(); // 0 = Sunday
+    const startDayOfWeek = firstDayOfMonth.getDay();
 
-    // Get previous month's last days to fill the grid
     const prevMonth = new Date(year, month - 1, 0);
     const daysInPrevMonth = prevMonth.getDate();
 
     const calendarDays: DayData[] = [];
 
-    // Add previous month's trailing days
     for (let i = startDayOfWeek - 1; i >= 0; i--) {
       const date = daysInPrevMonth - i;
       calendarDays.push({
@@ -205,18 +73,6 @@ const TransactionCalendar: React.FC = () => {
       });
     }
 
-    // Add current month's days
-    // for (let day = 1; day <= daysInMonth; day++) {
-    //   const dayTransactions = transactions.filter((transaction) => {
-    //     const transactionDate = new Date(
-
-    //       typeof transaction.Date === "object" && transaction.Date.seconds
-    //         ? transaction.Date.seconds * 1000
-    //         : transaction.Date
-    //     );
-    //     return transactionDate.getDate() === day;
-    //   });
-
     for (let day = 1; day <= daysInMonth; day++) {
       const dayTransactions = transactions.filter((transaction) => {
         let transactionDate: Date;
@@ -224,10 +80,8 @@ const TransactionCalendar: React.FC = () => {
         const dateField = transaction.Date as any;
 
         if (dateField && typeof dateField === "object" && dateField.seconds) {
-          // Firestore Timestamp
           transactionDate = new Date(dateField.seconds * 1000);
         } else {
-          // String, number, or Date
           transactionDate = new Date(dateField);
         }
 
@@ -253,8 +107,7 @@ const TransactionCalendar: React.FC = () => {
       });
     }
 
-    // Add next month's leading days to complete the grid
-    const remainingCells = 42 - calendarDays.length; // 6 rows × 7 days
+    const remainingCells = 42 - calendarDays.length;
     for (let day = 1; day <= remainingCells; day++) {
       calendarDays.push({
         date: day,
@@ -270,7 +123,6 @@ const TransactionCalendar: React.FC = () => {
     return calendarDays;
   };
 
-  // Load transactions for the month
   const loadCalendarData = async () => {
     try {
       setLoading(true);
@@ -294,20 +146,17 @@ const TransactionCalendar: React.FC = () => {
     }
   };
 
-  // Load data when currentDate changes
   useEffect(() => {
     loadCalendarData();
-    setSelectedDay(null); // Clear selection when month changes
+    setSelectedDay(null);
   }, [currentDate]);
 
-  // Load data on screen focus
   useFocusEffect(
     useCallback(() => {
       loadCalendarData();
     }, [currentDate])
   );
 
-  // Render day cell
   const renderDayCell = (dayData: DayData, index: number) => {
     const isSelected =
       selectedDay?.date === dayData.date &&
@@ -321,7 +170,7 @@ const TransactionCalendar: React.FC = () => {
           ${!dayData.isCurrentMonth ? "bg-gray-100" : "bg-white"}
           ${isSelected ? "bg-blue-100 border-blue-300" : ""}
         `}
-        style={{ width: "14.28%" }} // 100% / 7 days
+        style={{ width: "14.28%" }}
         onPress={() => {
           if (dayData.isCurrentMonth && dayData.transactions.length > 0) {
             setSelectedDay(dayData);
@@ -351,7 +200,6 @@ const TransactionCalendar: React.FC = () => {
     );
   };
 
-  // Render selected day details
   const renderSelectedDayDetails = () => {
     if (!selectedDay) return null;
 
@@ -375,21 +223,30 @@ const TransactionCalendar: React.FC = () => {
           </View>
         </View>
 
-        <View className="max-h-32">
-          <ScrollView>
-            {selectedDay.transactions.map((transaction, index) => (
-              <View
-                key={transaction.id || index}
-                className="flex-row justify-between items-center p-3 border-b border-gray-100"
-              >
-                <View className="flex-1">
-                  <Text className="text-sm font-medium text-gray-800">
-                    {transaction.Category}
-                  </Text>
-                  <Text className="text-xs text-gray-500">
-                    {transaction.Account}
-                  </Text>
-                </View>
+        {/* Mobile Optimized Transaction List */}
+        <ScrollView
+          style={{ maxHeight: 200 }}
+          showsVerticalScrollIndicator={true}
+          scrollIndicatorInsets={{ right: 1 }}
+          indicatorStyle="black"
+          bounces={true}
+          alwaysBounceVertical={true}
+          nestedScrollEnabled={true}
+        >
+          {selectedDay.transactions.map((transaction, index) => (
+            <View
+              key={transaction.id || index}
+              className="flex-row justify-between items-center p-4 border-b border-gray-100 bg-white"
+            >
+              <View className="flex-1 mr-3">
+                <Text className="text-sm font-medium text-gray-800 mb-1">
+                  {transaction.Category}
+                </Text>
+                <Text className="text-xs text-gray-500">
+                  {transaction.Account}
+                </Text>
+              </View>
+              <View className="items-end">
                 <Text
                   className={`text-sm font-bold ${
                     transaction.type === "income"
@@ -401,9 +258,18 @@ const TransactionCalendar: React.FC = () => {
                   {formatCurrency(transaction.Amount)}
                 </Text>
               </View>
-            ))}
-          </ScrollView>
-        </View>
+            </View>
+          ))}
+
+          {/* Scroll indicator for mobile */}
+          {selectedDay.transactions.length > 3 && (
+            <View className="p-2 bg-gray-50">
+              <Text className="text-xs text-gray-500 text-center">
+                ↕ Scroll to see all transactions
+              </Text>
+            </View>
+          )}
+        </ScrollView>
       </View>
     );
   };
@@ -418,7 +284,15 @@ const TransactionCalendar: React.FC = () => {
   }
 
   return (
-    <ScrollView className="flex-1 bg-gray-100">
+    <ScrollView
+      className="flex-1 bg-gray-100"
+      showsVerticalScrollIndicator={true}
+      scrollIndicatorInsets={{ right: 2 }}
+      indicatorStyle="black"
+      bounces={true}
+      alwaysBounceVertical={false}
+      contentContainerStyle={{ paddingBottom: 20 }}
+    >
       {/* Header */}
       <View className="p-4 bg-white border-b border-gray-200">
         <Text className="text-xl font-bold text-green-300 mb-1">
@@ -473,6 +347,13 @@ const TransactionCalendar: React.FC = () => {
             <Text className="text-xs text-gray-600">Selected</Text>
           </View>
         </View>
+      </View>
+
+      {/* Mobile scroll hint */}
+      <View className="mx-4 mb-4 p-2 bg-blue-50 rounded-lg">
+        <Text className="text-xs text-blue-600 text-center">
+          📱 Swipe up/down to scroll • Tap calendar days to view transactions
+        </Text>
       </View>
     </ScrollView>
   );

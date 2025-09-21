@@ -1,4 +1,3 @@
-// screens/NoteFormScreen.tsx
 import { useLoader } from "@/context/LoaderContext";
 import {
   createNote,
@@ -27,7 +26,6 @@ const NoteFormScreen = () => {
   const router = useRouter();
   const { hideLoader, showLoader } = useLoader();
 
-  // Load existing note data for editing
   useEffect(() => {
     const loadNoteData = async () => {
       if (!isNew && id) {
@@ -52,7 +50,6 @@ const NoteFormScreen = () => {
     loadNoteData();
   }, [id, isNew]);
 
-  // Handle form submission
   const handleSubmit = async () => {
     if (!message.trim()) {
       Alert.alert("Validation", "Message is required");

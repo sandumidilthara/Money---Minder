@@ -78,7 +78,6 @@ const TransactionFormScreen = () => {
     useState<boolean>(false);
   const [newCategoryName, setNewCategoryName] = useState<string>("");
 
-  // Categories from Firebase
   const [incomeCategories, setIncomeCategories] = useState<Category[]>([]);
   const [expenseCategories, setExpenseCategories] = useState<Category[]>([]);
 
@@ -87,7 +86,6 @@ const TransactionFormScreen = () => {
 
   const accounts = ["Cash", "Bank", "Credit Card", "Savings"];
 
-  // Function to parse date string properly
   const parseDateTime = (dateStr: string, timeStr: string): Date => {
     try {
       const [month, day, year] = dateStr
@@ -108,7 +106,6 @@ const TransactionFormScreen = () => {
     }
   };
 
-  // Function to format date for display
   const formatDateForDisplay = (date: Date): { date: string; time: string } => {
     return {
       date: date.toLocaleDateString("en-US", {
@@ -124,7 +121,6 @@ const TransactionFormScreen = () => {
     };
   };
 
-  // Load categories from Firebase
   const loadCategories = async () => {
     try {
       showLoader();
@@ -143,7 +139,6 @@ const TransactionFormScreen = () => {
     }
   };
 
-  // Handle adding new category
   const handleAddNewCategory = async () => {
     if (!newCategoryName.trim()) {
       Alert.alert("Validation", "Category name is required");
@@ -158,14 +153,14 @@ const TransactionFormScreen = () => {
         newCategoryId = await createIncomeCategory({
           name: newCategoryName.trim(),
         });
-        // Update local state
+
         const newCategory = { id: newCategoryId, name: newCategoryName.trim() };
         setIncomeCategories((prev) => [...prev, newCategory]);
       } else {
         newCategoryId = await createExpenseCategory({
           name: newCategoryName.trim(),
         });
-        // Update local state
+
         const newCategory = { id: newCategoryId, name: newCategoryName.trim() };
         setExpenseCategories((prev) => [...prev, newCategory]);
       }
@@ -173,7 +168,6 @@ const TransactionFormScreen = () => {
       // Set the new category as selected
       setCategory(newCategoryName.trim());
 
-      // Close modals and reset input
       setShowAddCategoryModal(false);
       setShowCategoryModal(false);
       setNewCategoryName("");
@@ -199,18 +193,15 @@ const TransactionFormScreen = () => {
           let transaction = null;
           let actualTransactionType: "income" | "expences" = "expences";
 
-          // Try to load as income first
           try {
             transaction = await getIncomeById(id);
             if (transaction) {
               actualTransactionType = "income";
             }
           } catch (incomeError) {
-            // If income fetch fails, try expense
             console.log("Not an income transaction, trying expense...");
           }
 
-          // If not found as income, try as expense
           if (!transaction) {
             try {
               transaction = await getExpenseById(id);
@@ -225,7 +216,6 @@ const TransactionFormScreen = () => {
             }
           }
 
-          // Set the correct transaction type based on what we found
           setTransactionType(actualTransactionType);
 
           if (transaction) {
@@ -234,15 +224,14 @@ const TransactionFormScreen = () => {
             setCategory(transaction.Category);
             setNote(transaction.Note || "");
 
-            // Handle date formatting
             if (transaction.Date instanceof Date) {
               dateValue = transaction.Date;
             } else if (transaction.Date instanceof Timestamp) {
-              dateValue = transaction.Date.toDate(); // ✅ Firestore Timestamp → Date
+              dateValue = transaction.Date.toDate();
             } else if (typeof transaction.Date === "string") {
               dateValue = new Date(transaction.Date);
             } else {
-              dateValue = new Date(); // fallback
+              dateValue = new Date();
             }
 
             const formatted = formatDateForDisplay(dateValue);
@@ -309,12 +298,10 @@ const TransactionFormScreen = () => {
     }
   };
 
-  // Get current categories based on transaction type
   const getCurrentCategories = (): Category[] => {
     return transactionType === "income" ? incomeCategories : expenseCategories;
   };
 
-  // Add Category Modal
   const AddCategoryModal = () => (
     <Modal
       visible={showAddCategoryModal}
@@ -365,7 +352,6 @@ const TransactionFormScreen = () => {
     </Modal>
   );
 
-  // CategoryModal with Firebase data and Add button
   const CategoryModal = () => (
     <Modal
       visible={showCategoryModal}
@@ -480,9 +466,9 @@ const TransactionFormScreen = () => {
               }`}
               onPress={() => {
                 setTransactionType("income");
-                setCategory(""); // Reset category when type changes
+                setCategory("");
               }}
-              disabled={!isNew} // Disable transaction type change when editing
+              disabled={!isNew}
             >
               <Text className="text-white text-center font-medium">Income</Text>
             </TouchableOpacity>
@@ -494,9 +480,9 @@ const TransactionFormScreen = () => {
               }`}
               onPress={() => {
                 setTransactionType("expences");
-                setCategory(""); // Reset category when type changes
+                setCategory("");
               }}
-              disabled={!isNew} // Disable transaction type change when editing
+              disabled={!isNew}
             >
               <Text className="text-white text-center font-medium">
                 Expense

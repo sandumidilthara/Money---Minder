@@ -193,19 +193,17 @@ const NotesHomeScreen = () => {
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
 
-  // Get current selected month from dashboard
   const { currentDate } = useMonthContext();
 
-  // Load notes filtered by selected month
   const loadNotes = async () => {
     try {
       setLoading(true);
       const year = currentDate.getFullYear();
-      const month = currentDate.getMonth(); // 0-indexed
+      const month = currentDate.getMonth();
 
       console.log("Loading notes for:", {
         year,
-        month: month + 1, // Display month (1-indexed)
+        month: month + 1,
         date: currentDate.toDateString(),
       });
 
@@ -220,26 +218,22 @@ const NotesHomeScreen = () => {
     }
   };
 
-  // Pull to refresh
   const onRefresh = async () => {
     setRefreshing(true);
     await loadNotes();
     setRefreshing(false);
   };
 
-  // Load data when currentDate changes
   useEffect(() => {
     loadNotes();
   }, [currentDate]);
 
-  // Load data on screen focus
   useFocusEffect(
     useCallback(() => {
       loadNotes();
     }, [currentDate])
   );
 
-  // Format date
   const formatDate = (date: Date) => {
     try {
       if (isNaN(date.getTime())) return "Invalid date";
@@ -255,7 +249,6 @@ const NotesHomeScreen = () => {
     }
   };
 
-  // Format month year for display
   const formatMonthYear = (date: Date) => {
     const options: Intl.DateTimeFormatOptions = {
       year: "numeric",
@@ -264,7 +257,6 @@ const NotesHomeScreen = () => {
     return date.toLocaleDateString("en-US", options);
   };
 
-  // Delete note
   const handleDeleteNote = (note: Note) => {
     Alert.alert(
       "Delete Note",
@@ -291,7 +283,6 @@ const NotesHomeScreen = () => {
     );
   };
 
-  // Render each note item
   const renderNoteItem = ({ item }: { item: Note }) => {
     return (
       <TouchableOpacity

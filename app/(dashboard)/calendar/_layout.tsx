@@ -1,6 +1,5 @@
-import { View, Text } from "react-native"
-import React from "react"
-import { Stack } from "expo-router"
+import { Stack } from "expo-router";
+import React from "react";
 
 const TaskLayout = () => {
   return (
@@ -8,17 +7,11 @@ const TaskLayout = () => {
       <Stack.Screen
         name="index"
         options={{
-          headerShown: false
-        }}
-      />
-      <Stack.Screen
-        name="[id]"
-        options={{
-          title: "Task Form"
+          headerShown: false,
         }}
       />
     </Stack>
-  )
-}
+  );
+};
 
-export default TaskLayout
+export default TaskLayout;

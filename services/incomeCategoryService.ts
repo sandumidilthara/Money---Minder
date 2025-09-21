@@ -9,11 +9,6 @@ import {
   updateDoc,
 } from "firebase/firestore";
 
-// ================================================================
-// INCOME CATEGORY SERVICE
-// ================================================================
-
-// For refer to collection
 export const incomeCategoryColRef = collection(db, "incomeCategory");
 
 export const createIncomeCategory = async (category: { name: string }) => {

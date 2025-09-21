@@ -1,10 +1,10 @@
 {
   "expo": {
-    "name": "amd-day-01",
+    "name": "Money-Minder",
     "slug": "amd-day-01",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/Lucid_Origin_Create_a_colorful_and_modern_icon_for_a_money_man_2.jpg",
     "scheme": "amdday01",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,

@@ -12,21 +12,18 @@ import {
   where,
 } from "firebase/firestore";
 
-// Collection references
 export const incomeColRef = collection(db, "income");
 export const expensesColRef = collection(db, "expences");
 
-// Helper function to convert various date formats to Date object
 const convertToDate = (date: any): Date => {
   if (!date) return new Date();
   if (date instanceof Date) return date;
-  if (date.seconds) return new Date(date.seconds * 1000); // Firebase Timestamp
+  if (date.seconds) return new Date(date.seconds * 1000);
   if (typeof date === "string") return new Date(date);
   if (typeof date === "number") return new Date(date);
   return new Date();
 };
 
-// Get all income transactions for current user
 export const getAllIncome = async (): Promise<Transaction[]> => {
   try {
     const currentUser = auth.currentUser;
@@ -61,7 +58,6 @@ export const getAllIncome = async (): Promise<Transaction[]> => {
   }
 };
 
-// Get all expense transactions for current user
 export const getAllExpenses = async (): Promise<Transaction[]> => {
   try {
     const currentUser = auth.currentUser;
@@ -69,7 +65,6 @@ export const getAllExpenses = async (): Promise<Transaction[]> => {
       throw new Error("User not authenticated");
     }
 
-    // Simple query to avoid index issues
     const q = query(expensesColRef, where("email", "==", currentUser.email));
     const snapshot = await getDocs(q);
 
@@ -96,7 +91,6 @@ export const getAllExpenses = async (): Promise<Transaction[]> => {
   }
 };
 
-// Get income transactions by month and year for current user
 export const getIncomeByMonth = async (
   year: number,
   month: number
@@ -113,7 +107,6 @@ export const getIncomeByMonth = async (
       month: month + 1, // Display month (1-indexed)
     });
 
-    // Get all user income and filter in JavaScript to avoid index issues
     const q = query(incomeColRef, where("email", "==", currentUser.email));
     const snapshot = await getDocs(q);
 
@@ -123,7 +116,6 @@ export const getIncomeByMonth = async (
       type: "income" as const,
     })) as Transaction[];
 
-    // Filter by month and year in JavaScript
     const filteredIncome = allIncome.filter((transaction) => {
       const transactionDate = convertToDate(transaction.Date);
       return (
@@ -154,7 +146,6 @@ export const getIncomeByMonth = async (
   }
 };
 
-// Get expense transactions by month and year for current user
 export const getExpensesByMonth = async (
   year: number,
   month: number
@@ -168,10 +159,9 @@ export const getExpensesByMonth = async (
     console.log("Filtering expenses for:", {
       email: currentUser.email,
       year,
-      month: month + 1, // Display month (1-indexed)
+      month: month + 1,
     });
 
-    // Get all user expenses and filter in JavaScript to avoid index issues
     const q = query(expensesColRef, where("email", "==", currentUser.email));
     const snapshot = await getDocs(q);
 
@@ -212,7 +202,6 @@ export const getExpensesByMonth = async (
   }
 };
 
-// Get all transactions by month and year (income + expenses) for current user
 export const getTransactionsByMonth = async (
   year: number,
   month: number
@@ -241,7 +230,6 @@ export const getTransactionsByMonth = async (
   }
 };
 
-// Get transaction summary by month for current user
 export const getTransactionSummaryByMonth = async (
   year: number,
   month: number
@@ -277,7 +265,6 @@ export const getTransactionSummaryByMonth = async (
   }
 };
 
-// Get all transactions (income + expenses) for current user
 export const getAllTransactions = async (): Promise<Transaction[]> => {
   try {
     const [incomeList, expensesList] = await Promise.all([
@@ -303,7 +290,6 @@ export const getAllTransactions = async (): Promise<Transaction[]> => {
   }
 };
 
-// Get transaction summary for current user
 export const getTransactionSummary = async (): Promise<TransactionSummary> => {
   try {
     const transactions = await getAllTransactions();
@@ -336,7 +322,6 @@ export const getTransactionSummary = async (): Promise<TransactionSummary> => {
   }
 };
 
-// Create income transaction
 export const createIncome = async (
   income: Omit<Transaction, "id" | "type">
 ) => {
@@ -357,7 +342,6 @@ export const createIncome = async (
   }
 };
 
-// Create expense transaction
 export const createExpense = async (
   expense: Omit<Transaction, "id" | "type">
 ) => {
@@ -378,7 +362,6 @@ export const createExpense = async (
   }
 };
 
-// Update income transaction (only if it belongs to current user)
 export const updateIncome = async (
   id: string,
   income: Partial<Transaction>
@@ -404,7 +387,6 @@ export const updateIncome = async (
   }
 };
 
-// Update expense transaction (only if it belongs to current user)
 export const updateExpense = async (
   id: string,
   expense: Partial<Transaction>
@@ -430,7 +412,6 @@ export const updateExpense = async (
   }
 };
 
-// Delete income transaction (only if it belongs to current user)
 export const deleteIncome = async (id: string) => {
   try {
     const currentUser = auth.currentUser;
@@ -452,7 +433,6 @@ export const deleteIncome = async (id: string) => {
   }
 };
 
-// Delete expense transaction (only if it belongs to current user)
 export const deleteExpense = async (id: string) => {
   try {
     const currentUser = auth.currentUser;
@@ -474,7 +454,6 @@ export const deleteExpense = async (id: string) => {
   }
 };
 
-// Get income by ID (only if it belongs to current user)
 export const getIncomeById = async (
   id: string
 ): Promise<Transaction | null> => {
@@ -504,7 +483,6 @@ export const getIncomeById = async (
   }
 };
 
-// Get expense by ID (only if it belongs to current user)
 export const getExpenseById = async (
   id: string
 ): Promise<Transaction | null> => {
@@ -538,7 +516,6 @@ export const getExpenseById = async (
   }
 };
 
-// Get transactions by category for current user
 export const getTransactionsByCategory = async (
   category: string
 ): Promise<Transaction[]> => {
@@ -584,7 +561,6 @@ export const getTransactionsByCategory = async (
   }
 };
 
-// Get transactions by account for current user
 export const getTransactionsByAccount = async (
   account: string
 ): Promise<Transaction[]> => {
