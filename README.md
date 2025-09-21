@@ -246,6 +246,7 @@ For support and questions:
 - React Native community for excellent libraries
 - Contributors who helped improve this app
 
----
+## youtube vedio Link : https://youtube.com/shorts/ZPqjzgpfA44?si=Cdas2mFggXnl15WA
+## APK Link : https://expo.dev/artifacts/eas/7ScqwWGpVuwaxunjGCN5Mi.apk
 
 **Happy budgeting! 💰📱**
