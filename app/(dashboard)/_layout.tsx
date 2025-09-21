@@ -262,7 +262,7 @@ const DashboardLayout = () => {
           <Tabs.Screen
             name="transaction"
             options={{
-              title: "transaction",
+              title: "Transaction",
               tabBarIcon: (data) => (
                 <MaterialIcons
                   name="home-filled"
@@ -273,9 +273,9 @@ const DashboardLayout = () => {
             }}
           />
           <Tabs.Screen
-            name="tasks"
+            name="calendar"
             options={{
-              title: "Task",
+              title: "Calendar",
               tabBarIcon: (data) => (
                 <MaterialIcons
                   name="check-circle"
@@ -286,9 +286,9 @@ const DashboardLayout = () => {
             }}
           />
           <Tabs.Screen
-            name="profile"
+            name="stats"
             options={{
-              title: "Profile",
+              title: "Stats",
               tabBarIcon: (data) => (
                 <MaterialIcons
                   name="person"
@@ -301,7 +301,7 @@ const DashboardLayout = () => {
           <Tabs.Screen
             name="notes"
             options={{
-              title: "notes",
+              title: "Notes",
               tabBarIcon: (data) => (
                 <MaterialIcons
                   name="settings"

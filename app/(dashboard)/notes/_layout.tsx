@@ -10,12 +10,12 @@ const TaskLayout = () => {
           headerShown: false,
         }}
       />
-      {/* <Stack.Screen
+      <Stack.Screen
         name="[id]"
         options={{
-          title: "Task Form"
+          headerShown: false,
         }}
-      /> */}
+      />
     </Stack>
   );
 };

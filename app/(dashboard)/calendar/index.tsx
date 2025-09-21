@@ -206,13 +206,31 @@ const TransactionCalendar: React.FC = () => {
     }
 
     // Add current month's days
+    // for (let day = 1; day <= daysInMonth; day++) {
+    //   const dayTransactions = transactions.filter((transaction) => {
+    //     const transactionDate = new Date(
+
+    //       typeof transaction.Date === "object" && transaction.Date.seconds
+    //         ? transaction.Date.seconds * 1000
+    //         : transaction.Date
+    //     );
+    //     return transactionDate.getDate() === day;
+    //   });
+
     for (let day = 1; day <= daysInMonth; day++) {
       const dayTransactions = transactions.filter((transaction) => {
-        const transactionDate = new Date(
-          typeof transaction.Date === "object" && transaction.Date.seconds
-            ? transaction.Date.seconds * 1000
-            : transaction.Date
-        );
+        let transactionDate: Date;
+
+        const dateField = transaction.Date as any;
+
+        if (dateField && typeof dateField === "object" && dateField.seconds) {
+          // Firestore Timestamp
+          transactionDate = new Date(dateField.seconds * 1000);
+        } else {
+          // String, number, or Date
+          transactionDate = new Date(dateField);
+        }
+
         return transactionDate.getDate() === day;
       });
 
